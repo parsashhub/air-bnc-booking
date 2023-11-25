@@ -9,6 +9,7 @@ import {
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const SignUp = () => {
   const formik = useFormik({
@@ -20,13 +21,10 @@ const SignUp = () => {
     validationSchema: yup.object().shape({
       name: yup.string().required(),
       username: yup.string().required(),
-      password: yup
-        .string()
-        .required()
-        .min(4, "کلمه عبور باید حداقل 6 حرف باشد"),
+      password: yup.string().required().min(4),
     }),
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      await axios.post("/api/auth/signup", values);
     },
   });
   const { handleChange, handleBlur, handleSubmit, values, touched, errors } =
