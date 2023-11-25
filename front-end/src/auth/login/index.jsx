@@ -8,23 +8,29 @@ import {
 } from "@mui/material";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Login = () => {
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
-      username: "",
+      email: "",
       password: "",
     },
     validationSchema: yup.object().shape({
-      username: yup.string().required(),
-      password: yup
-        .string()
-        .required()
-        .min(4, "کلمه عبور باید حداقل 6 حرف باشد"),
+      email: yup.string().email().required(),
+      password: yup.string().required().min(4),
     }),
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      try {
+        const res = await axios.post("/api/auth", values);
+        localStorage.setItem("token", res.data.token);
+        navigate("/");
+      } catch (e) {
+        toast.error(e.message);
+      }
     },
   });
   const { handleChange, handleBlur, handleSubmit, values, touched, errors } =
@@ -32,19 +38,22 @@ const Login = () => {
 
   return (
     <div className="flex items-center justify-around grow">
-      <Card className="shadow-lg shadow-gray-400 flex flex-col items-center w-[40%] p-4" sx={{borderRadius: "25px"}}>
+      <Card
+        className="shadow-lg shadow-gray-400 flex flex-col items-center w-[40%] p-4"
+        sx={{ borderRadius: "25px" }}
+      >
         <Typography variant="h4" className="my-4">
           Login
         </Typography>
         <CardContent className="flex flex-col w-[80%] gap-4">
           <TextField
-            name="username"
-            label="Username"
-            value={values.username}
+            name="email"
+            label="Email"
+            value={values.email}
             onBlur={handleBlur}
             onChange={handleChange}
-            helperText={touched["username"] && errors["username"]}
-            error={!!(touched["username"] && errors["username"])}
+            helperText={touched["email"] && errors["email"]}
+            error={!!(touched["email"] && errors["email"])}
             fullWidth
             InputProps={{ sx: { borderRadius: "25px" } }}
           />
@@ -71,7 +80,10 @@ const Login = () => {
             Login
           </Button>
           <div className="text-gray-500">
-            Do not have an account? <Link className="underline" to="/auth/signup">Create</Link>
+            Do not have an account?{" "}
+            <Link className="underline" to="/auth/signup">
+              Create
+            </Link>
           </div>
         </CardActions>
       </Card>
