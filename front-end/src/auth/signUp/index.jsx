@@ -8,23 +8,31 @@ import {
 } from "@mui/material";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       name: "",
-      username: "",
+      email: "",
       password: "",
     },
     validationSchema: yup.object().shape({
       name: yup.string().required(),
-      username: yup.string().required(),
+      email: yup.string().email().required(),
       password: yup.string().required().min(4),
     }),
     onSubmit: async (values) => {
-      await axios.post("/api/auth/signup", values);
+      try {
+        await axios.post("/api/users", values);
+        toast.success("user created successfully");
+        navigate("/");
+      } catch (e) {
+        toast.error(e.message);
+      }
     },
   });
   const { handleChange, handleBlur, handleSubmit, values, touched, errors } =
@@ -52,13 +60,13 @@ const SignUp = () => {
             InputProps={{ sx: { borderRadius: "25px" } }}
           />
           <TextField
-            name="username"
-            label="Username"
-            value={values.username}
+            name="email"
+            label="Email"
+            value={values.email}
             onBlur={handleBlur}
             onChange={handleChange}
-            helperText={touched["username"] && errors["username"]}
-            error={!!(touched["username"] && errors["username"])}
+            helperText={touched["email"] && errors["email"]}
+            error={!!(touched["email"] && errors["email"])}
             fullWidth
             InputProps={{ sx: { borderRadius: "25px" } }}
           />
