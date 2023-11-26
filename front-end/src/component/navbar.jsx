@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../userContext.jsx";
+import { Typography } from "@mui/material";
 
 const Navbar = () => {
+  const { user } = useContext(UserContext);
+
   return (
     <header className="flex items-center justify-between">
       <Link to="/" className="flex items-center gap-1">
@@ -73,6 +78,7 @@ const Navbar = () => {
             />
           </svg>
         </Link>
+        {!!user && <Typography variant="subtitle1">{user.name}</Typography>}
       </div>
     </header>
   );
