@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 const winston = require("winston");
-const { DB, DB_TEST, APP_ENV } = process.env;
+const { DB_URL, DB_LOCAL } = process.env;
 module.exports = function () {
   mongoose
-    .connect(APP_ENV === "test" ? DB_TEST : DB)
+    .connect(DB_LOCAL)
     .then(() =>
       winston.info(
-        `connected to ${APP_ENV === "test" ? DB_TEST : DB} successfully`,
+        `Connected to DB Successfully`,
       ),
     );
 };
