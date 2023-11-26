@@ -3,10 +3,10 @@ import {
   Card,
   CardActions,
   CardContent,
-  TextField,
   Typography,
 } from "@mui/material";
 import * as yup from "yup";
+import TextField from "../../../component/customTextField.jsx";
 import { useFormik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -56,8 +56,6 @@ const SignUp = () => {
             onChange={handleChange}
             helperText={touched["name"] && errors["name"]}
             error={!!(touched["name"] && errors["name"])}
-            fullWidth
-            InputProps={{ sx: { borderRadius: "25px" } }}
           />
           <TextField
             name="email"
@@ -67,8 +65,6 @@ const SignUp = () => {
             onChange={handleChange}
             helperText={touched["email"] && errors["email"]}
             error={!!(touched["email"] && errors["email"])}
-            fullWidth
-            InputProps={{ sx: { borderRadius: "25px" } }}
           />
           <TextField
             name="password"
@@ -79,8 +75,6 @@ const SignUp = () => {
             helperText={touched["password"] && errors["password"]}
             error={!!(touched["password"] && errors["password"])}
             type="password"
-            fullWidth
-            InputProps={{ sx: { borderRadius: "25px" } }}
           />
         </CardContent>
         <CardActions className="w-full flex flex-col justify-center gap-4">

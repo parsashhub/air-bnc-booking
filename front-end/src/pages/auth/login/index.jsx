@@ -3,17 +3,21 @@ import {
   Card,
   CardActions,
   CardContent,
-  TextField,
   Typography,
 } from "@mui/material";
+import TextField from "../../../component/customTextField.jsx";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useContext } from "react";
+import { UserContext } from "../../../userContext.jsx";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -26,7 +30,7 @@ const Login = () => {
     onSubmit: async (values) => {
       try {
         const res = await axios.post("/api/auth", values);
-        localStorage.setItem("token", res.data.token);
+        setUser(res.data?.data);
         navigate("/");
       } catch (e) {
         toast.error(e.message);
@@ -54,8 +58,6 @@ const Login = () => {
             onChange={handleChange}
             helperText={touched["email"] && errors["email"]}
             error={!!(touched["email"] && errors["email"])}
-            fullWidth
-            InputProps={{ sx: { borderRadius: "25px" } }}
           />
           <TextField
             name="password"
@@ -66,8 +68,6 @@ const Login = () => {
             helperText={touched["password"] && errors["password"]}
             error={!!(touched["password"] && errors["password"])}
             type="password"
-            fullWidth
-            InputProps={{ sx: { borderRadius: "25px" } }}
           />
         </CardContent>
         <CardActions className="w-full flex flex-col justify-center gap-4">
