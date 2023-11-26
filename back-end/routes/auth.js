@@ -3,6 +3,7 @@ const { User } = require("../models/user");
 const express = require("express");
 const Joi = require("joi");
 const router = express.Router();
+const _ = require("lodash");
 
 router.post("/", async (req, res) => {
   const { body } = req;
@@ -17,7 +18,9 @@ router.post("/", async (req, res) => {
   if (!validPsw) return res.status(400).send("invalid email or password");
 
   const token = user.generateAuthToken();
-  res.send({ token });
+  res
+    .cookie("token", token)
+    .send({ data: _.pick(user, ["name", "email", "_id"]) });
 });
 
 function validate(req) {
