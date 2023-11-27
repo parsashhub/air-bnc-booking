@@ -35,7 +35,7 @@ const ProfileNavbar = () => {
         </svg>
         MY Profile
       </Link>
-      <Link to={"/profile/booking"} className={genClassLink("/profile/booking")}>
+      <Link to={"/profile/bookings"} className={genClassLink("/profile/bookings")}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

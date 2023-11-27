@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import Home from "./pages/home/index.jsx";
+import Home from "./pages/placeList/index.jsx";
 import Login from "./pages/auth/login/index.jsx";
 import Layout from "./component/layout.jsx";
 import SignUp from "./pages/auth/signUp/index.jsx";
@@ -10,6 +10,8 @@ import Profile from "./pages/profile/index.jsx";
 import Places from "./pages/profile/places.jsx";
 import PlacesForm from "./pages/profile/placesForm.jsx";
 import PlaceDetail from "./pages/placeDetail/index.jsx";
+import Bookings from "./pages/profile/bookings/index.jsx";
+import Booking from "./pages/profile/booking/index.jsx";
 import { Typography } from "@mui/material";
 
 axios.defaults.withCredentials = true;
@@ -23,10 +25,11 @@ const App = () => {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/profile/bookings" element={<Bookings />} />
+            <Route path="/profile/bookings/:id" element={<Booking />} />
             <Route path="/profile/places" element={<Places />} />
             <Route path="/profile/places/new" element={<PlacesForm />} />
             <Route path="/profile/places/:id" element={<PlacesForm />} />
-            <Route path="/profile" element={<Profile />} />
             <Route path="/place/:id" element={<PlaceDetail />} />
             <Route path="/auth/login" element={<Login />} />
             <Route path="/auth/signup" element={<SignUp />} />
