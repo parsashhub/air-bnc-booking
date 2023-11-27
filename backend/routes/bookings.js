@@ -11,10 +11,19 @@ router.post("/", authMiddleware, async (req, res) => {
   if (error) return res.status(400).send({ message: error.details[0].message });
   try {
     const booking = await Booking.create({ ...body, user: user._id });
-    res.status(201).send({ data: _.pick(booking,["_id"]), message: "booked!" });
+    res
+      .status(201)
+      .send({ data: _.pick(booking, ["_id"]), message: "booked!" });
   } catch (e) {
     res.status(500).send({ message: e.message });
   }
+});
+
+router.get("/", authMiddleware, async (req, res) => {
+  const bookings = await Booking.find({ user: req.user._id })
+    .populate("place")
+    .select("-__v");
+  res.send({ data: bookings });
 });
 
 module.exports = router;
