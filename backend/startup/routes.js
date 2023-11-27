@@ -4,6 +4,7 @@ const users = require("../routes/users");
 const auth = require("../routes/auth");
 const upload = require("../routes/upload");
 const places = require("../routes/places");
+const bookings = require("../routes/bookings");
 const cookieParser = require("cookie-parser");
 
 module.exports = function (app) {
@@ -14,6 +15,7 @@ module.exports = function (app) {
   app.use("/api/upload", upload);
   app.use("/api/pics", express.static("uploads"));
   app.use("/api/places", places);
+  app.use("/api/bookings", bookings);
 
   app.use(error);
 };
