@@ -2,20 +2,23 @@ version: "3.8"
 
 services:
   frontend:
+    container_name: airbnc_front
     depends_on:
       - backend
     build: ./frontend
     volumes:
       - ./frontend:/app
     ports:
-      - 3000:5173
+      - 5173:5173
+    stdin_open: true
+    tty: true
 
   backend:
+    container_name: airbnc_Back
     build: ./backend
     ports:
       - 3001:3001
     volumes:
       - ./backend:/app
+      - ./app/node_modules
 
-volumes:
-  air_bnc:
