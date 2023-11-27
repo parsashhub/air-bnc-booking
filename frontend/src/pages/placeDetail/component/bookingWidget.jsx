@@ -5,6 +5,7 @@ import { Navigate } from "react-router-dom";
 import { UserContext } from "../../../userContext.jsx";
 import { Button } from "@mui/material";
 import TextField from "../../../component/customTextField.jsx";
+import { toast } from "react-toastify";
 
 export default function BookingWidget({ place }) {
   const [checkIn, setCheckIn] = useState("");
@@ -30,17 +31,22 @@ export default function BookingWidget({ place }) {
   }
 
   async function bookThisPlace() {
-    const response = await axios.post("/bookings", {
-      checkIn,
-      checkOut,
-      numberOfGuests,
-      name,
-      phone,
-      place: place?._id,
-      price: numberOfNights * place?.price,
-    });
-    const bookingId = response.data._id;
-    setRedirect(`/account/bookings/${bookingId}`);
+    try {
+      const response = await axios.post("/api/bookings", {
+        checkIn,
+        checkOut,
+        numberOfGuests,
+        name,
+        phone,
+        place: place?._id,
+        price: numberOfNights * place?.price,
+      });
+      const bookingId = response.data.data._id;
+      setRedirect(`/profile/bookings/${bookingId}`);
+      toast.success("place booked successfully");
+    } catch (e) {
+      toast.error(e.message);
+    }
   }
 
   if (redirect) {
@@ -77,7 +83,7 @@ export default function BookingWidget({ place }) {
             value={numberOfGuests}
             onChange={(ev) => setNumberOfGuests(ev.target.value)}
             label="Number of guests"
-            sx={{marginY: "0.5rem"}}
+            sx={{ marginY: "0.5rem" }}
           />
         </div>
         {numberOfNights > 0 && (
