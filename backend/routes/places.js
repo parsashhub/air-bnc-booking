@@ -19,8 +19,8 @@ router.post("/", authMiddleware, async (req, res) => {
 });
 
 router.get("/", authMiddleware, async (req, res) => {
-  // Place.find({})
-  res.status(201).send({ data: place });
+  const places = await Place.find({owner: req.user._id}).select("-__v")
+  res.send({ data: places });
 });
 
 module.exports = router;
