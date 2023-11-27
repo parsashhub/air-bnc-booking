@@ -6,13 +6,11 @@ export const UserContext = createContext({});
 
 export const UserContextProvider = ({ children }) => {
   const [user, setUser] = useState();
-  const { error, data } = useUsers();
+  const { data } = useUsers();
 
   useEffect(() => {
-    setUser(data);
+    if (data) setUser(data);
   }, [data]);
-
-  if (error) console.error("fetching user failed");
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
@@ -25,5 +23,6 @@ export const useUsers = () =>
   useQuery({
     queryKey: ["users"],
     queryFn: () => axios.get("/api/users/me").then((res) => res.data?.data),
+    retry: 0,
     staleTime: 60 * 1000 * 60, // 1 hour
   });
