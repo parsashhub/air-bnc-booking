@@ -44,12 +44,12 @@ export default function PhotosUploader({ values, setFieldValue }) {
 
   function removePhoto(ev, filename) {
     ev.preventDefault();
-    // onChange([...addedPhotos.filter((photo) => photo !== filename)]);
+    setFieldValue("photos", [...values.filter((photo) => photo !== filename)]);
   }
 
   function selectAsMainPhoto(ev, filename) {
     ev.preventDefault();
-    // onChange([filename, ...addedPhotos.filter((photo) => photo !== filename)]);
+    setFieldValue("photos", [filename, ...values.filter((photo) => photo !== filename),]);
   }
 
   return (
