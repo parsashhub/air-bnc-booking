@@ -23,7 +23,7 @@ router.post("/byLink", authMiddleware, async (req, res) => {
 const photosMiddleware = multer({ dest: __dirname.slice(0, -6) + "uploads/" });
 router.post(
   "/",
-   photosMiddleware.array("photos", 100),
+  [authMiddleware, photosMiddleware.array("photos", 100)],
   async (req, res) => {
     const uploadedFiles = [];
     for (let i = 0; i < req.files.length; i++) {
@@ -32,7 +32,9 @@ router.post(
       const ext = parts[parts.length - 1];
       const newPath = path + "." + ext;
       fs.renameSync(path, newPath);
-      uploadedFiles.push(newPath.replace(__dirname.slice(0, -6) + "uploads/", ""));
+      uploadedFiles.push(
+        newPath.replace(__dirname.slice(0, -6) + "uploads/", ""),
+      );
     }
     res.json(uploadedFiles);
   },

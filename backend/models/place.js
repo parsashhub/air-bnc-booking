@@ -9,8 +9,8 @@ const placeSchema = new mongoose.Schema({
   description: String,
   perks: [String],
   extraInfo: String,
-  checkIn: Number,
-  checkOut: Number,
+  checkIn: String,
+  checkOut: String,
   maxGuests: Number,
   price: Number,
 });
@@ -23,10 +23,10 @@ function validatePlace(place) {
     address: Joi.string().min(5).max(255),
     description: Joi.string().min(5).max(255),
     extraInfo: Joi.string().min(5).max(255),
-    checkIn: Joi.number(),
-    checkOut: Joi.number(),
+    checkIn: Joi.string(),
+    checkOut: Joi.string(),
     maxGuests: Joi.number(),
-    price: Joi.number().positive(),
+    price: Joi.number(),
   });
 
   return schema.validate(place);
