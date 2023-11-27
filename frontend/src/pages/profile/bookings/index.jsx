@@ -21,7 +21,7 @@ const Bookings = () => {
             sx={{ borderRadius: "25px", marginY: "1rem" }}
           >
             <Link
-              to={`/account/bookings/${booking._id}`}
+              to={`/profile/bookings/${booking._id}`}
               className="flex items-center gap-4 rounded-2xl overflow-hidden"
             >
               <div className="w-48">

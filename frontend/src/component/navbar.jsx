@@ -7,7 +7,7 @@ const Navbar = () => {
   const { user } = useContext(UserContext);
 
   return (
-    <header className="flex items-center justify-between">
+    <header className="flex items-center justify-between pb-6 border-b">
       <Logo />
       <div className="flex items-center border border-gray-300 rounded-full py-2 px-4 gap-2 shadow-md shadow-gray-300">
         <div className="border-r border-gray-300 px-2">AnyWhere</div>
