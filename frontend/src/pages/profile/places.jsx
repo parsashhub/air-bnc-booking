@@ -41,7 +41,7 @@ const Places = () => {
   );
 };
 
-const LoadingSkeleton = () => {
+export const LoadingSkeleton = () => {
   return (
     <>
       <Paper sx={{ borderRadius: "25px" }} elevation={5}>
