@@ -18,6 +18,8 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
+            <Route path="/profile/:subpage?" element={<Profile />} />
+            <Route path="/profile/:subpage/:action" element={<Profile />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/auth/login" element={<Login />} />
             <Route path="/auth/signup" element={<SignUp />} />
