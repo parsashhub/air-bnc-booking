@@ -1,8 +1,26 @@
-# React + Vite
+### run the project using docker
+```
+docker-compose up
+```
+### run projects separately
+```
+cd /frontend && npm run dev 
+```
+for starting the react app, and for express node js webserver:
+```
+cd /backend && npm run dev
+```
+and for database integration, you should install mongo-db and add the connection string in a .env file, or you can use an online one:
+head over to <a href="https://www.mongodb.com/">link</a> here, sign up, and use the free subscription plan.
+maybe I will add db integration using docker too, but not for now.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### .env
+the backend .env file should have the below content:
+```
+APP_ENV=
+PORT=3001
+JWT_PRIVATE_KEY=aSecretKey
+DB_LOCAL="mongodb://localhost/booking"
+```
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<a href="https://documenter.getpostman.com/view/18846553/2s9YeEcs9z">here</a> is the list of apis' documentation using postman.
