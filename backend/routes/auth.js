@@ -23,6 +23,10 @@ router.post("/", async (req, res) => {
     .send({ data: _.pick(user, ["name", "email", "_id"]) });
 });
 
+router.post("/logout", async (req, res) => {
+  res.cookie("token", "").send({ message: "logged out successfully" });
+});
+
 function validate(req) {
   const schema = Joi.object().keys({
     email: Joi.string().email().min(10).max(255).required(),
