@@ -1,6 +1,8 @@
+import { useNavigate, useParams } from "react-router-dom";
 import { useFormik } from "formik";
-import { addPlaceForm, validationSchema, form } from "./config.jsx";
-import TextField from "../../../component/customTextField.jsx";
+import { addPlaceForm, form, validationSchema } from "./_component/config.jsx";
+import axios from "axios";
+import { toast } from "react-toastify";
 import {
   Button,
   Checkbox,
@@ -10,14 +12,16 @@ import {
   FormHelperText,
   FormLabel,
   Grid,
+  Paper,
 } from "@mui/material";
-import PhotosUploader from "./photosUploader";
-import { toast } from "react-toastify";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import TextField from "../../component/customTextField.jsx";
+import PhotosUploader from "./_component/photosUploader.jsx";
+import { useCallback, useEffect } from "react";
 
-const AddPlaceForm = () => {
+const PlacesForm = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: addPlaceForm,
     validationSchema,
@@ -42,8 +46,27 @@ const AddPlaceForm = () => {
     setFieldValue,
   } = formik;
 
+  const getPlaceDetail = useCallback(async () => {
+    try {
+      const res = await axios.get("/api/places/" + id);
+      console.log(res);
+    } catch (e) {
+      toast.error(e.message);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    if (id) {
+      getPlaceDetail();
+    }
+  }, [id]);
+
   return (
-    <div>
+    <Paper
+      elevation={5}
+      className="mt-10"
+      sx={{ marginTop: "2rem", padding: "2rem", borderRadius: "25px" }}
+    >
       <form onSubmit={handleSubmit}>
         <Grid
           container
@@ -134,8 +157,8 @@ const AddPlaceForm = () => {
           </Grid>
         </Grid>
       </form>
-    </div>
+    </Paper>
   );
 };
 
-export default AddPlaceForm;
+export default PlacesForm;

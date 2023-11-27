@@ -7,6 +7,9 @@ import axios from "axios";
 import { UserContextProvider } from "./userContext";
 import QueryClientProvider from "./queryClientProvider.jsx";
 import Profile from "./pages/profile/index.jsx";
+import Places from "./pages/profile/places.jsx";
+import PlacesForm from "./pages/profile/placesForm.jsx";
+import {Typography} from "@mui/material";
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = "http://localhost:3001";
@@ -18,12 +21,14 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="/profile/:subpage?" element={<Profile />} />
-            <Route path="/profile/:subpage/:action" element={<Profile />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile/places" element={<Places />} />
+            <Route path="/profile/places/new" element={<PlacesForm />} />
+            <Route path="/profile/places/:id" element={<PlacesForm />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/auth/login" element={<Login />} />
             <Route path="/auth/signup" element={<SignUp />} />
-            <Route path="*" element={<div>404</div>} />
+            <Route path="*" element={<Typography variant="h4">404 not found</Typography>} />
           </Route>
         </Routes>
       </UserContextProvider>

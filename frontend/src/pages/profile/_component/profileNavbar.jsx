@@ -1,25 +1,24 @@
-import { Link, useParams } from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import { useCallback } from "react";
 
 const ProfileNavbar = () => {
-  let { subpage } = useParams();
-  if (subpage === undefined) subpage = "profile";
+  let {pathname} = useLocation();
 
   const genClassLink = useCallback(
     (type = null) => {
       let classes = "inline-flex items-center gap-1 py-2 px-6 rounded-full";
-      if (type === subpage)
+      if (type === pathname)
         classes += " bg-primary text-white transition-colors duration-300";
       else classes += " bg-gray-200";
 
       return classes;
     },
-    [subpage],
+    [pathname],
   );
 
   return (
     <nav className="w-full flex justify-center items-center my-8 gap-2">
-      <Link to={"/profile"} className={genClassLink("profile")}>
+      <Link to={"/profile"} className={genClassLink("/profile")}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -36,7 +35,7 @@ const ProfileNavbar = () => {
         </svg>
         MY Profile
       </Link>
-      <Link to={"/profile/booking"} className={genClassLink("booking")}>
+      <Link to={"/profile/booking"} className={genClassLink("/profile/booking")}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -53,7 +52,7 @@ const ProfileNavbar = () => {
         </svg>
         My Booking
       </Link>
-      <Link to={"/profile/places"} className={genClassLink("places")}>
+      <Link to={"/profile/places"} className={genClassLink("/profile/places")}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
