@@ -27,7 +27,7 @@ const Places = () => {
               <div className="flex w-32 min-h-32 shrink-0 ">
                 <PlaceImg place={place} />
               </div>
-              <div className="grow-0 shrink">
+              <div className="grow-0 shrink my-6">
                 <Typography variant="h5">{place?.title}</Typography>
                 <Typography variant="body1" className="mt-2">
                   {place?.description}
