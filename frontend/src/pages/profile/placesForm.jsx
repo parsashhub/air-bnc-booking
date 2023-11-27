@@ -27,8 +27,11 @@ const PlacesForm = () => {
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
       try {
-        await axios.post("/api/places", values);
-        toast.success("accommodation created successfully");
+        if (!id) await axios.post("/api/places", values);
+        else await axios.put("/api/places/" + id, values);
+        toast.success(
+          `accommodation ${id ? "updated" : "created"} successfully`,
+        );
         resetForm();
         navigate("/profile/places");
       } catch (e) {
@@ -49,7 +52,12 @@ const PlacesForm = () => {
   const getPlaceDetail = useCallback(async () => {
     try {
       const res = await axios.get("/api/places/" + id);
-      console.log(res);
+      const data = res.data.data;
+      Object.keys(data).forEach((item) => {
+        if (item !== "owner" && item !== "_id") {
+          setFieldValue(item, data[item]);
+        }
+      });
     } catch (e) {
       toast.error(e.message);
     }
