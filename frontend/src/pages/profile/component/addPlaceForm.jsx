@@ -12,18 +12,36 @@ import {
   Grid,
 } from "@mui/material";
 import PhotosUploader from "./photosUploader";
+import { toast } from "react-toastify";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const AddPlaceForm = () => {
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: addPlaceForm,
     validationSchema,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values, { resetForm }) => {
+      try {
+        await axios.post("/api/places", values);
+        toast.success("accommodation created successfully");
+        resetForm();
+        navigate("/profile/places");
+      } catch (e) {
+        toast.error(e.message);
+      }
     },
   });
-  const { handleChange, handleBlur, handleSubmit, values, touched, errors, setFieldValue } =
-    formik;
-  console.log(values.photos)
+  const {
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    values,
+    touched,
+    errors,
+    setFieldValue,
+  } = formik;
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -55,7 +73,10 @@ const AddPlaceForm = () => {
             if (type === "photo")
               return (
                 <Grid item xs={12} md={12} key="photo">
-                  <PhotosUploader values={values.photos} setFieldValue={setFieldValue} />
+                  <PhotosUploader
+                    values={values.photos}
+                    setFieldValue={setFieldValue}
+                  />
                 </Grid>
               );
             if (type === "Checkbox")

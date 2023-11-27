@@ -4,7 +4,6 @@ export const addPlaceForm = {
   title: "",
   address: "",
   photos: [],
-  photosLink: [],
   description: "",
   perks: [],
   extraInfo: "",
@@ -22,7 +21,7 @@ export const validationSchema = yup.object().shape({
   checkIn: yup.string().required(),
   checkOut: yup.string().required(),
   maxGuests: yup.number().positive(),
-  price: yup.number(),
+  price: yup.number().required().positive(),
 });
 
 export const form = [
@@ -284,20 +283,22 @@ export const form = [
     name: "checkIn",
     label: "check in time",
     placeholder: "14:00",
-    md: 4
   },
   {
     type: "TextField",
     name: "checkOut",
     label: "check out time",
-    placeholder: "12:00",
-    md: 4
+    placeholder: "12:00 pm",
   },
   {
     type: "TextField",
     name: "maxGuests",
     label: "max guests",
-    placeholder: "12:00",
-    md: 4
+  },
+  {
+    type: "TextField",
+    name: "price",
+    label: "Price($)",
+    placeholder: '100',
   },
 ];
