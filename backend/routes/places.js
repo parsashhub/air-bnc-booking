@@ -24,6 +24,11 @@ router.get("/", authMiddleware, async (req, res) => {
   res.send({ data: places });
 });
 
+router.get("/list",  async (req, res) => {
+  const places = await Place.find().select("-__v");
+  res.send({ data: places });
+});
+
 router.get("/:id", [validateObjectId, authMiddleware], async (req, res) => {
   const place = await Place.findById(req.params.id).select("-__v");
   res.send({ data: place });
