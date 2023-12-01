@@ -2,7 +2,7 @@
 ```
 npm i nodemon
 ```
-#### or
+#### then
 ```
 npm run dev
 ```
